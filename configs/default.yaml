@@ -1,0 +1,33 @@
+capture:
+  device_index: 0
+  width: 160
+  height: 120
+  target_fps: 30
+  auto_size: true           # Dynamically fill terminal
+  aspect_ratio: 0.5         # Adjust for rectangular terminal chars
+
+ascii:
+  # Research baseline: classic 10-level gradient
+  charset: " .:-=+*#%@"
+  # Extended 70-level gradient (more detail, slower mapping)
+  charset_extended: " .'`^\",;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
+
+renderer:
+  engine: "baseline"   # "baseline" | "delta"
+  # Color mode — use "none" for research baseline (zero overhead)
+  # Options: none | 256 | truecolor | matrix | cyberpunk | blood | amber | heatmap
+  color_mode: "none"
+
+logging:
+  enabled: true
+  log_dir: "logs/"
+  log_interval_frames: 30   # write CSV row every N frames
+
+data:
+  save_frames: true          # dump raw grayscale frames as .npy
+  frame_dir: "data/frames/"
+  save_metadata: true        # write data/frames/metadata.json
+  max_saved_frames: 1000     # sliding window buffer (0 for infinite)
+
+delta:
+  threshold: 0.05            # pixel change threshold for delta engine
