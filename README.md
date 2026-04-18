@@ -27,6 +27,7 @@ Unlike simple scripts, the **AsciiCell Lab** is an experimental infrastructure d
 | **Blood** | Dark Crimson | `Black` → `Pure Red` |
 | **Amber** | Retro Hacker | `Classic Terminal Amber` |
 | **Heatmap** | Intensity Analysis | `Blue` → `Green` → `Yellow` → `Red` |
+| **Neon** | Electric Glow | `Cyan` → `Lime` → `Yellow` |
 
 ---
 

@@ -45,7 +45,7 @@ ENGINE_REGISTRY = {
 
 VALID_COLOR_MODES = {
     "none", "256", "truecolor",
-    "matrix", "cyberpunk", "blood", "amber", "heatmap",
+    "matrix", "cyberpunk", "blood", "amber", "heatmap", "neon",
 }
 
 
@@ -67,6 +67,7 @@ Color modes:
   blood       — black → deep crimson
   amber       — retro hacker amber
   heatmap     — blue → green → yellow → red
+  neon        — electric cyan → lime → yellow  [NEW]
 
 Engines:
   baseline    — full recompute every frame (research baseline)
@@ -98,6 +99,8 @@ Engines:
                    help="Auto-detect terminal size and fill screen")
     p.add_argument("--aspect-ratio", type=float,
                    help="Height scale correction (default: 0.5)")
+    p.add_argument("--contrast",     choices=["none", "normalize", "equalize"],
+                   help="Preprocessing contrast mode")
     p.add_argument("--max-frames",   type=int,
                    help="Max frames to keep on disk (default: 1000)")
     p.add_argument("--threshold", type=float,
@@ -136,6 +139,8 @@ def load_config(config_path: str, args: argparse.Namespace) -> dict:
         cfg["capture"]["auto_size"] = True
     if args.aspect_ratio is not None:
         cfg["capture"]["aspect_ratio"] = args.aspect_ratio
+    if args.contrast:
+        cfg["capture"]["contrast_mode"] = args.contrast
     if args.max_frames is not None:
         cfg["data"]["max_saved_frames"] = args.max_frames
     if args.threshold is not None:
@@ -164,12 +169,13 @@ def main() -> None:
     res_str = "AUTO" if cfg["capture"].get("auto_size") else f"{cfg['capture']['width']}×{cfg['capture']['height']}"
     print(
         f"\n  AsciiCell Lab\n"
-        f"  engine:  {cfg['renderer']['engine']}\n"
-        f"  color:   {cfg['renderer']['color_mode']}\n"
-        f"  res:     {res_str}\n"
-        f"  fps:     {cfg['capture']['target_fps']}\n"
-        f"  frames:  {'saving' if cfg['data'].get('save_frames') else 'OFF'}\n"
-        f"  log:     {'enabled' if cfg['logging'].get('enabled') else 'OFF'}\n"
+        f"  engine:   {cfg['renderer']['engine']}\n"
+        f"  color:    {cfg['renderer']['color_mode']}\n"
+        f"  contrast: {cfg['capture'].get('contrast_mode', 'none')}\n"
+        f"  res:      {res_str}\n"
+        f"  fps:      {cfg['capture']['target_fps']}\n"
+        f"  frames:   {'saving' if cfg['data'].get('save_frames') else 'OFF'}\n"
+        f"  log:      {'enabled' if cfg['logging'].get('enabled') else 'OFF'}\n"
         f"\n  Starting in 1 second... (Ctrl+C to quit)\n"
     )
 

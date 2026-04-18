@@ -4,12 +4,13 @@ capture:
   height: 120
   target_fps: 30
   auto_size: true           # Dynamically fill terminal
-  aspect_ratio: 0.5         # Adjust for rectangular terminal chars
+  aspect_ratio: 0.55        # Tuned for best terminal proportions
+  contrast_mode: "normalize" # none | normalize | equalize
 
 ascii:
-  # Research baseline: classic 10-level gradient
-  charset: " .:-=+*#%@"
-  # Extended 70-level gradient (more detail, slower mapping)
+  # Pro-grade 70-level gradient for smoother transitions
+  charset: " .'`^\",:;Il!i~+_-?][}{1)(|\\/*tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
+  # Research fallback
   charset_extended: " .'`^\",;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
 
 renderer:

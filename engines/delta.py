@@ -75,7 +75,8 @@ class DeltaEngine:
         self._save_en    = config["data"].get("save_frames", False)
         self._threshold  = config.get("delta", {}).get("threshold", 0.05)
         self._auto_size  = config["capture"].get("auto_size", False)
-        self._aspect     = config["capture"].get("aspect_ratio", 0.5)
+        self._aspect     = config["capture"].get("aspect_ratio", 0.55)
+        self._contrast   = config["capture"].get("contrast_mode", "none")
 
         self._target_dt  = 1.0 / self._target_fps
         self._frame_id   = 0
@@ -123,7 +124,7 @@ class DeltaEngine:
             return
 
         # 2. Preprocess
-        norm = preprocess(frame, self._out_w, self._out_h)
+        norm = preprocess(frame, self._out_w, self._out_h, contrast_mode=self._contrast)
 
         # 3. ASCII mapping (full, vectorized — cheap)
         rows = map_to_ascii(norm, self._charset)

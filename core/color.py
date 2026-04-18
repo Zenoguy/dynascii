@@ -102,6 +102,22 @@ def _heatmap(val: float) -> tuple[int, int, int]:
     return stops[-1][1]
 
 
+def _neon(val: float) -> tuple[int, int, int]:
+    """Electric Cyan → Lime → Bright Yellow."""
+    stops = [
+        (0.00, (0, 150, 255)),  # Deep Cyan
+        (0.50, (0, 255, 0)),    # Pure Lime
+        (1.00, (255, 255, 0)),  # Electric Yellow
+    ]
+    for i in range(len(stops) - 1):
+        lo_v, lo_c = stops[i]
+        hi_v, hi_c = stops[i + 1]
+        if val <= hi_v:
+            t = (val - lo_v) / (hi_v - lo_v)
+            return tuple(int(lo_c[j] + t * (hi_c[j] - lo_c[j])) for j in range(3))
+    return stops[-1][1]
+
+
 # Named-mode → truecolor palette mapping
 PALETTE_FNS: dict[str, callable] = {
     "matrix":    _matrix,
@@ -109,6 +125,7 @@ PALETTE_FNS: dict[str, callable] = {
     "blood":     _blood,
     "amber":     _amber,
     "heatmap":   _heatmap,
+    "neon":      _neon,
 }
 
 # All named modes are just truecolor presets
